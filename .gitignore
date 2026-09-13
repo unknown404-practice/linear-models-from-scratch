@@ -39,11 +39,11 @@ ENV/
 .coverage
 htmlcov/
 
-# Datasets & large files (keep README and placeholder scripts)
-data/house_prices/*.csv
+# Datasets & large archives
 data/house_prices/*.zip
-data/california_housing/*.csv
 data/california_housing/*.parquet
+*.tar.gz
+*.zip
 
 # OS specific
 .DS_Store

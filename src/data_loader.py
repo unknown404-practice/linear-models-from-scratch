@@ -192,14 +192,25 @@ def load_california_housing(
     y_train, y_test : pd.Series
     feature_names : list of str
     """
-    from sklearn.datasets import fetch_california_housing
+    local_csv = (
+        Path(__file__).resolve().parent.parent
+        / "data"
+        / "california_housing"
+        / "california_housing.csv"
+    )
+    if local_csv.is_file():
+        df = pd.read_csv(local_csv)
+        target_name = "MedHouseVal"
+    else:
+        from sklearn.datasets import fetch_california_housing
 
-    data = fetch_california_housing(as_frame=True)
-    df = data.frame.copy()
+        data = fetch_california_housing(as_frame=True)
+        df = data.frame.copy()
+        target_name = data.target_names[0]
 
     return clean_and_split_regression_data(
         df=df,
-        target_col=data.target_names[0],
+        target_col=target_name,
         test_size=test_size,
         random_state=random_state,
         log_transform_target=False,
@@ -251,6 +262,11 @@ def load_house_prices_kaggle(
     """
     data_path = Path(data_dir)
     train_file = data_path / "train.csv"
+    if not train_file.is_file() and not data_path.is_absolute():
+        project_root_train = Path(__file__).resolve().parent.parent / data_dir / "train.csv"
+        if project_root_train.is_file():
+            data_path = project_root_train.parent
+            train_file = project_root_train
 
     if not train_file.is_file():
         instructions = (
