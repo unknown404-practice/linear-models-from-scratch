@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Linear Models from Scratch"
+authors:
+  - family-names: Saha
+    given-names: Ranadeep
+    email: ranadeep2021saha@gmail.com
+    affiliation: "Member of Google Developer Group"
+version: 0.1.0
+date-released: 2026-09-13
+url: "https://github.com/unknown404-practice/linear-models-from-scratch"
+repository-code: "https://github.com/unknown404-practice/linear-models-from-scratch.git"
+license: MIT
+contact:
+  - email: ranadeep2021saha@gmail.com
+abstract: "A from-scratch, vectorized NumPy implementation of linear models (OLS, regularized, robust, Bayesian, GLMs, streaming, conformal) with scikit-learn-compatible pipelines, full docs, and competition-grade examples."
+keywords:
+  - machine-learning
+  - linear-models
+  - from-scratch
+  - numpy
+  - optimization
+  - bayesian-regression
+  - conformal-prediction
+  - generalized-linear-models

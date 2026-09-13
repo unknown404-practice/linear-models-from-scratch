@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "created_at": "2026-09-13T07:50:18.835470+00:00",
+    "format_version": "1.0",
+    "library": "linear_regression_from_scratch"
+  },
+  "model": {
+    "type": "PipelineScratch",
+    "steps": [
+      {
+        "name": "preprocessor",
+        "step": {
+          "type": "ColumnTransformerScratch",
+          "params": {
+            "remainder": "drop"
+          },
+          "transformers": [
+            {
+              "name": "num",
+              "step": {
+                "type": "PipelineScratch",
+                "steps": [
+                  {
+                    "name": "imputer",
+                    "step": {
+                      "type": "SimpleImputerScratch",
+                      "params": {
+                        "strategy": "median",
+                        "fill_value": null
+                      },
+                      "state": {
+                        "statistics_": [
+                          6.0,
+                          1467.5,
+                          984.0,
+                          2.0
+                        ],
+                        "n_features_in_": 4
+                      }
+                    }
+                  },
+                  {
+                    "name": "scaler",
+                    "step": {
+                      "type": "StandardScalerScratch",
+                      "params": {
+                        "with_mean": true,
+                        "with_std": true
+                      },
+                      "state": {
+                        "mean_": [
+                          6.095034246575342,
+                          1518.140410958904,
+                          1054.1652397260275,
+                          1.7611301369863013
+                        ],
+                        "var_": [
+                          1.9678520536216924,
+                          285877.3415861325,
+                          201292.85711364113,
+                          0.5756466679958717
+                        ],
+                        "scale_": [
+                          1.402801501860364,
+                          534.6749868715877,
+                          448.65672525176876,
+                          0.7587138248350769
+                        ],
+                        "n_features_in_": 4,
+                        "feature_names_in_": null
+                      }
+                    }
+                  }
+                ]
+              },
+              "columns": [
+                "OverallQual",
+                "GrLivArea",
+                "TotalBsmtSF",
+                "GarageCars"
+              ]
+            },
+            {
+              "name": "cat",
+              "step": {
+                "type": "PipelineScratch",
+                "steps": [
+                  {
+                    "name": "imputer",
+                    "step": {
+                      "type": "SimpleImputerScratch",
+                      "params": {
+                        "strategy": "most_frequent",
+                        "fill_value": null
+                      },
+                      "state": {
+                        "statistics_": [
+                          "NAmes"
+                        ],
+                        "n_features_in_": 1
+                      }
+                    }
+                  },
+                  {
+                    "name": "ohe",
+                    "step": {
+                      "type": "OneHotEncoderScratch",
+                      "params": {
+                        "handle_unknown": "ignore"
+                      },
+                      "state": {
+                        "categories_": [
+                          [
+                            "Blmngtn",
+                            "Blueste",
+                            "BrDale",
+                            "BrkSide",
+                            "ClearCr",
+                            "CollgCr",
+                            "Crawfor",
+                            "Edwards",
+                            "Gilbert",
+                            "IDOTRR",
+                            "MeadowV",
+                            "Mitchel",
+                            "NAmes",
+                            "NPkVill",
+                            "NWAmes",
+                            "NoRidge",
+                            "NridgHt",
+                            "OldTown",
+                            "SWISU",
+                            "Sawyer",
+                            "SawyerW",
+                            "Somerst",
+                            "StoneBr",
+                            "Timber",
+                            "Veenker"
+                          ]
+                        ],
+                        "n_features_in_": 1,
+                        "feature_names_in_": [
+                          "x0"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "columns": [
+                "Neighborhood"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "regressor",
+        "step": {
+          "type": "GradientDescentLinearRegression",
+          "params": {
+            "lr": 0.05,
+            "n_iters": 400,
+            "seed": 42,
+            "batch_size": null,
+            "standardize": false,
+            "optimizer": "adam",
+            "scheduler": null,
+            "penalty": "l1",
+            "alpha": 0.01,
+            "l1_ratio": 0.5,
+            "tol": 1e-05
+          },
+          "state": {
+            "weights": [
+              0.15501318876097478,
+              0.10517136603667636,
+              0.049973899025850005,
+              0.06426260587690141,
+              5.964610432727411,
+              5.937791744953292,
+              5.785301987530199,
+              5.93542061409224,
+              6.1780378026388725,
+              6.059726671714875,
+              6.138073962855476,
+              5.894191913954756,
+              6.063867707087246,
+              5.754794265967142,
+              5.8724900928246475,
+              6.00806532877242,
+              6.013705588907991,
+              5.91354897949643,
+              6.0291306395471285,
+              6.115936130750596,
+              6.126691642508279,
+              5.836573237623254,
+              5.95202620531024,
+              6.017625307093049,
+              6.032287155393201,
+              6.074065489129285,
+              6.134767204303394,
+              6.087119091811353,
+              6.201734784989568
+            ],
+            "bias": 6.01106231177675,
+            "n_features_in_": 29,
+            "feature_names_in_": null,
+            "scaler_": null
+          }
+        }
+      }
+    ]
+  }
+}

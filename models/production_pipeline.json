@@ -1,0 +1,286 @@
+{
+  "metadata": {
+    "created_at": "2026-09-13T10:29:34.267560+00:00",
+    "format_version": "1.0",
+    "library": "linear_regression_from_scratch"
+  },
+  "model": {
+    "type": "PipelineScratch",
+    "steps": [
+      {
+        "name": "preprocessor",
+        "step": {
+          "type": "ColumnTransformerScratch",
+          "params": {
+            "remainder": "drop"
+          },
+          "transformers": [
+            {
+              "name": "numeric",
+              "step": {
+                "type": "PipelineScratch",
+                "steps": [
+                  {
+                    "name": "imputer",
+                    "step": {
+                      "type": "SimpleImputerScratch",
+                      "params": {
+                        "strategy": "median",
+                        "fill_value": null
+                      },
+                      "state": {
+                        "statistics_": [
+                          1473.0,
+                          6.0,
+                          2.0,
+                          997.5,
+                          1095.0,
+                          1972.0,
+                          2.0,
+                          9600.0
+                        ],
+                        "n_features_in_": 8
+                      }
+                    }
+                  },
+                  {
+                    "name": "scaler",
+                    "step": {
+                      "type": "StandardScalerScratch",
+                      "params": {
+                        "with_mean": true,
+                        "with_std": true
+                      },
+                      "state": {
+                        "mean_": [
+                          1527.4015410958905,
+                          6.1215753424657535,
+                          1.7816780821917808,
+                          1061.771404109589,
+                          1169.3544520547946,
+                          1970.9657534246576,
+                          1.577054794520548,
+                          10689.642123287671
+                        ],
+                        "var_": [
+                          274794.17181269353,
+                          1.8687810799399514,
+                          0.5473697867798837,
+                          194029.36469597367,
+                          149389.75107606966,
+                          940.1803340213924,
+                          0.29885707918934123,
+                          115664847.99521193
+                        ],
+                        "scale_": [
+                          524.2081378733961,
+                          1.367033679153499,
+                          0.7398444341751066,
+                          440.48764420352774,
+                          386.50970372821126,
+                          30.66236021609218,
+                          0.5466782227136373,
+                          10754.759318330278
+                        ],
+                        "n_features_in_": 8,
+                        "feature_names_in_": null
+                      }
+                    }
+                  }
+                ]
+              },
+              "columns": [
+                "GrLivArea",
+                "OverallQual",
+                "GarageCars",
+                "TotalBsmtSF",
+                "1stFlrSF",
+                "YearBuilt",
+                "FullBath",
+                "LotArea"
+              ]
+            },
+            {
+              "name": "categorical",
+              "step": {
+                "type": "PipelineScratch",
+                "steps": [
+                  {
+                    "name": "imputer",
+                    "step": {
+                      "type": "SimpleImputerScratch",
+                      "params": {
+                        "strategy": "constant",
+                        "fill_value": "Missing"
+                      },
+                      "state": {
+                        "statistics_": [
+                          "Missing",
+                          "Missing",
+                          "Missing",
+                          "Missing"
+                        ],
+                        "n_features_in_": 4
+                      }
+                    }
+                  },
+                  {
+                    "name": "ohe",
+                    "step": {
+                      "type": "OneHotEncoderScratch",
+                      "params": {
+                        "handle_unknown": "ignore"
+                      },
+                      "state": {
+                        "categories_": [
+                          [
+                            "Blmngtn",
+                            "Blueste",
+                            "BrDale",
+                            "BrkSide",
+                            "ClearCr",
+                            "CollgCr",
+                            "Crawfor",
+                            "Edwards",
+                            "Gilbert",
+                            "IDOTRR",
+                            "MeadowV",
+                            "Mitchel",
+                            "NAmes",
+                            "NPkVill",
+                            "NWAmes",
+                            "NoRidge",
+                            "NridgHt",
+                            "OldTown",
+                            "SWISU",
+                            "Sawyer",
+                            "SawyerW",
+                            "Somerst",
+                            "StoneBr",
+                            "Timber",
+                            "Veenker"
+                          ],
+                          [
+                            "Ex",
+                            "Fa",
+                            "Gd",
+                            "TA"
+                          ],
+                          [
+                            "Ex",
+                            "Fa",
+                            "Gd",
+                            "TA"
+                          ],
+                          [
+                            "1.5Fin",
+                            "1.5Unf",
+                            "1Story",
+                            "2.5Fin",
+                            "2.5Unf",
+                            "2Story",
+                            "SFoyer",
+                            "SLvl"
+                          ]
+                        ],
+                        "n_features_in_": 4,
+                        "feature_names_in_": [
+                          "x0",
+                          "x1",
+                          "x2",
+                          "x3"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "columns": [
+                "Neighborhood",
+                "KitchenQual",
+                "ExterQual",
+                "HouseStyle"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "regressor",
+        "step": {
+          "type": "GradientDescentLinearRegression",
+          "params": {
+            "lr": 0.02,
+            "n_iters": 500,
+            "seed": 42,
+            "batch_size": null,
+            "standardize": false,
+            "optimizer": "sgd",
+            "scheduler": null,
+            "penalty": "l2",
+            "alpha": 1.0,
+            "l1_ratio": 0.5,
+            "tol": 1e-05
+          },
+          "state": {
+            "weights": [
+              0.05823261909619447,
+              0.0735302713073023,
+              0.05345874006550597,
+              0.036290157989306474,
+              0.03493339684208796,
+              0.043220826251102365,
+              0.030655271875925958,
+              0.022096193254278224,
+              -0.0011515970344621379,
+              -0.00010464684234970672,
+              -0.0027046651512259694,
+              -0.00207120419008625,
+              0.0026244214147965383,
+              0.0020889327457753047,
+              0.006722246744988252,
+              -0.00857980494727487,
+              0.0017821684655005391,
+              -0.003476758445358121,
+              -0.0017397148808473701,
+              -0.000890618410551689,
+              -0.001434360157676542,
+              -0.0005185743284038837,
+              0.0007085149391169728,
+              0.004952410538474923,
+              0.008491602587264464,
+              -0.007153536601728407,
+              -3.8068047446999246e-05,
+              -0.0012877517635697167,
+              -0.0010834984999878224,
+              0.00287804865821848,
+              0.0033654818593244007,
+              0.0017394885789161036,
+              0.0016225552433010175,
+              0.012543650801079626,
+              -0.004421374254868117,
+              0.016095618442494762,
+              -0.01947682251399876,
+              0.006618871791178815,
+              -0.0025003072534931646,
+              0.01767595415095904,
+              -0.01705344621393718,
+              -0.003340152731020705,
+              -0.0014307279991441816,
+              -0.005681885978151877,
+              0.0008079254695013278,
+              -0.0002400963300872806,
+              0.013597127193172472,
+              -0.0005087912950339332,
+              0.0015376741454716902
+            ],
+            "bias": 12.03389774403281,
+            "n_features_in_": 49,
+            "feature_names_in_": null,
+            "scaler_": null
+          }
+        }
+      }
+    ]
+  }
+}

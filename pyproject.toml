@@ -1,0 +1,156 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linear-models-from-scratch"
+version = "0.1.0" # Pre-1.0 initial release
+description = "A from-scratch, vectorized NumPy implementation of linear models (OLS, regularized, robust, Bayesian, GLMs, streaming, conformal) with scikit-learn-compatible pipelines, full docs, and competition-grade examples."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [
+    { name = "Ranadeep Saha", email = "ranadeep2021saha@gmail.com" },
+]
+keywords = [
+    "machine-learning",
+    "linear-regression",
+    "from-scratch",
+    "numpy",
+    "bayesian-regression",
+    "conformal-prediction",
+    "generalized-linear-models",
+    "kalman-filter",
+    "recursive-least-squares",
+    "quantile-regression",
+    "scikit-learn",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "scikit-learn>=1.3.0",
+    "scipy>=1.10.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "nbclient>=0.8.0",
+    "nbformat>=5.9.0",
+    "pre-commit>=3.3.0",
+]
+docs = [
+    "jupyterlab>=4.0.0",
+    "markdown>=3.4.0",
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.4.0",
+    "mkdocstrings[python]>=0.23.0",
+]
+all = [
+    "linear-models-from-scratch[dev,docs]",
+    "kaggle>=1.5.16",
+    "kagglehub>=0.2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/unknown404-practice/linear-models-from-scratch"
+Documentation = "https://github.com/unknown404-practice/linear-models-from-scratch#readme"
+Repository = "https://github.com/unknown404-practice/linear-models-from-scratch.git"
+Issues = "https://github.com/unknown404-practice/linear-models-from-scratch/issues"
+Changelog = "https://github.com/unknown404-practice/linear-models-from-scratch/blob/main/CHANGELOG.md"
+LinkedIn = "https://www.linkedin.com/in/ranadeep-saha-a03296404/"
+
+[tool.setuptools]
+package-dir = { "" = "." }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "linear_models_from_scratch*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [
+    ".git",
+    ".pytest_cache",
+    ".ipynb_checkpoints",
+    "build",
+    "dist",
+    "*.egg-info",
+    "*.ipynb",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = [
+    "E501", # line length handled by formatter
+    "E741", # ambiguous variable name (e.g. l, I in mathematical formulas)
+    "E402", # module level import not at top of file
+    "W291", # trailing whitespace
+    "W293", # blank line contains whitespace
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+"tests/*" = ["F401", "F841"]
+"scripts/*" = ["F401", "F841"]
+"docs/*" = ["F401", "F841"]
+"examples/*" = ["F401", "F841"]
+"competitions/*" = ["F401", "F841"]
+"linear_models_from_scratch/*" = ["F401", "F403"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311", "py312"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.pytest_cache
+  | \.ipynb_checkpoints
+  | build
+  | dist
+  | \.egg-info
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = ["src", "linear_models_from_scratch"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = false
+warn_unused_configs = false
+ignore_missing_imports = true
+follow_imports = "silent"
+check_untyped_defs = false
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+disable_error_code = ["operator", "arg-type", "index", "assignment", "var-annotated", "misc"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
